@@ -6,6 +6,11 @@ image:
   pullPolicy: IfNotPresent
 
 service:
-  type: NodePort
-  port: 8080
-  nodePort: 30080
+  type: ClusterIP
+  port: 80
+  targetPort: 80 # This MUST match your Go app logs
+
+ingress:
+  enabled: true
+  className: "public"
+  host: "kubernetes-app-nginx.local"
