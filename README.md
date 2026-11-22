@@ -54,12 +54,12 @@ Pod runs Nginx with the packaged HTML
 ### Directory structure
 
 ```text
-nginx-website/
+kubernetes-app-nginx/
 ├── app/
 │   ├── Dockerfile
 │   └── index.html
 └── helm/
-    └── nginx-website/
+    └── kubernetes-app-nginx/
         ├── Chart.yaml
         ├── values.yaml
         └── templates/
@@ -83,32 +83,32 @@ This example uses the MicroK8s registry at `10.206.213.243:32000`:
 
 ```bash
 docker build \
-  -t 10.206.213.243:32000/nginx-website:v1 \
+  -t 10.206.213.243:32000/kubernetes-app-nginx:v1 \
   ./app
 
-docker push 10.206.213.243:32000/nginx-website:v1
+docker push 10.206.213.243:32000/kubernetes-app-nginx:v1
 ```
 
 The registry must be enabled and reachable, and the Docker client must be configured to push to it if it uses an insecure HTTP endpoint.
 
-### helm/nginx-website/Chart.yaml
+### helm/kubernetes-app-nginx/Chart.yaml
 
 ```yaml
 apiVersion: v2
-name: nginx-website
+name: kubernetes-app-nginx
 description: Nginx website deployment
 type: application
 version: 0.1.0
 appVersion: "1.0"
 ```
 
-### helm/nginx-website/values.yaml
+### helm/kubernetes-app-nginx/values.yaml
 
 ```yaml
 replicaCount: 1
 
 image:
-  repository: 10.206.213.243:32000/nginx-website
+  repository: 10.206.213.243:32000/kubernetes-app-nginx
   tag: v1
   pullPolicy: IfNotPresent
 
@@ -118,7 +118,7 @@ service:
   nodePort: 30080
 ```
 
-### helm/nginx-website/templates/deployment.yaml
+### helm/kubernetes-app-nginx/templates/deployment.yaml
 
 ```yaml
 apiVersion: apps/v1
@@ -143,7 +143,7 @@ spec:
             - containerPort: 80
 ```
 
-### helm/nginx-website/templates/service.yaml
+### helm/kubernetes-app-nginx/templates/service.yaml
 
 ```yaml
 apiVersion: v1
@@ -163,7 +163,7 @@ spec:
 ### Deploy with Helm
 
 ```bash
-microk8s helm3 upgrade --install nginx-website ./helm/nginx-website \
+microk8s helm3 upgrade --install kubernetes-app-nginx ./helm/kubernetes-app-nginx \
   -n dev --create-namespace
 ```
 
@@ -181,23 +181,23 @@ After editing `app/index.html`, build and push a new image tag:
 
 ```bash
 docker build \
-  -t 10.206.213.243:32000/nginx-website:v2 \
+  -t 10.206.213.243:32000/kubernetes-app-nginx:v2 \
   ./app
 
-docker push 10.206.213.243:32000/nginx-website:v2
+docker push 10.206.213.243:32000/kubernetes-app-nginx:v2
 ```
 
 Update the Helm release:
 
 ```bash
-microk8s helm3 upgrade nginx-website ./helm/nginx-website \
+microk8s helm3 upgrade kubernetes-app-nginx ./helm/kubernetes-app-nginx \
   -n dev --set image.tag=v2
 ```
 
 Check the rollout:
 
 ```bash
-microk8s kubectl rollout status deployment/nginx-website -n dev
+microk8s kubectl rollout status deployment/kubernetes-app-nginx -n dev
 microk8s kubectl get pods -n dev
 ```
 
@@ -218,9 +218,9 @@ For this example, the ConfigMap provides `index.html` to Nginx through a volume 
 ### Directory structure
 
 ```text
-nginx-website/
+kubernetes-app-nginx/
 └── helm/
-    └── nginx-website/
+    └── kubernetes-app-nginx/
         ├── Chart.yaml
         ├── values.yaml
         ├── files/
@@ -231,7 +231,7 @@ nginx-website/
             └── service.yaml
 ```
 
-### helm/nginx-website/templates/configmap.yaml
+### helm/kubernetes-app-nginx/templates/configmap.yaml
 
 ```yaml
 apiVersion: v1
@@ -273,7 +273,7 @@ This mounts the ConfigMap at Nginx's web-root directory.
 ### Deploy with Helm
 
 ```bash
-microk8s helm3 upgrade --install nginx-website ./helm/nginx-website \
+microk8s helm3 upgrade --install kubernetes-app-nginx ./helm/kubernetes-app-nginx \
   -n dev --create-namespace
 ```
 
@@ -282,13 +282,13 @@ microk8s helm3 upgrade --install nginx-website ./helm/nginx-website \
 Edit the chart file:
 
 ```text
-helm/nginx-website/files/index.html
+helm/kubernetes-app-nginx/files/index.html
 ```
 
 Then apply the updated chart:
 
 ```bash
-microk8s helm3 upgrade nginx-website ./helm/nginx-website -n dev
+microk8s helm3 upgrade kubernetes-app-nginx ./helm/kubernetes-app-nginx -n dev
 ```
 
 Helm updates the ConfigMap. Kubernetes updates files in a ConfigMap volume eventually; it is not necessarily instantaneous. With a normal ConfigMap volume mount (not `subPath`), the updated file becomes visible without rebuilding the image or restarting the Pod.
@@ -298,7 +298,7 @@ Check the ConfigMap:
 ```bash
 microk8s kubectl get configmaps -n dev
 
-microk8s kubectl describe configmap nginx-website-html -n dev
+microk8s kubectl describe configmap kubernetes-app-nginx-html -n dev
 ```
 
 **Important ConfigMap notes:**
@@ -331,28 +331,28 @@ microk8s kubectl get pods -n dev
 Suppose the Pod is named:
 
 ```text
-nginx-website-xxxxxxxxxx-yyyyy
+kubernetes-app-nginx-xxxxxxxxxx-yyyyy
 ```
 
 ### Copy a file from Ubuntu into the Pod
 
 ```bash
 microk8s kubectl cp ./index.html \
-  dev/nginx-website-xxxxxxxxxx-yyyyy:/usr/share/nginx/html/index.html
+  dev/kubernetes-app-nginx-xxxxxxxxxx-yyyyy:/usr/share/nginx/html/index.html
 ```
 
 ### Copy an entire directory into the Pod
 
 ```bash
 microk8s kubectl cp ./website \
-  dev/nginx-website-xxxxxxxxxx-yyyyy:/usr/share/nginx/html/
+  dev/kubernetes-app-nginx-xxxxxxxxxx-yyyyy:/usr/share/nginx/html/
 ```
 
 ### Copy a file from the Pod to Ubuntu
 
 ```bash
 microk8s kubectl cp \
-  dev/nginx-website-xxxxxxxxxx-yyyyy:/usr/share/nginx/html/index.html \
+  dev/kubernetes-app-nginx-xxxxxxxxxx-yyyyy:/usr/share/nginx/html/index.html \
   ./index.html
 ```
 
@@ -364,7 +364,7 @@ Edit the host file and copy it again:
 nano index.html
 
 microk8s kubectl cp ./index.html \
-  dev/nginx-website-xxxxxxxxxx-yyyyy:/usr/share/nginx/html/index.html
+  dev/kubernetes-app-nginx-xxxxxxxxxx-yyyyy:/usr/share/nginx/html/index.html
 ```
 
 Normally, no image rebuild or Pod restart is needed.
