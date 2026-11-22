@@ -1,5 +1,4 @@
 # MicroK8s / Kubernetes: Managing Application Files with Helm
-![nginx](images/nginx-logo.png)
 
 This guide explains three ways to make application files such as `index.html` available to containers running in MicroK8s:
 

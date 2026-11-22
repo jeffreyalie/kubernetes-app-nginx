@@ -27,7 +27,7 @@ docker run -d --name kubernetes-app-nginx --restart unless-stopped -p 8080:80  1
 1. Install
 
 ```bash
-microk8s helm3 upgrade --install kubernetes-app-nginx ./helm/kubernetes-app-nginx \
+helm upgrade --install kubernetes-app-nginx ./helm/kubernetes-app-nginx \
   --namespace dev \
   --create-namespace
 ```
@@ -35,7 +35,7 @@ microk8s helm3 upgrade --install kubernetes-app-nginx ./helm/kubernetes-app-ngin
 2. To roll out a new image tag at the same time:
 
 ```bash
-microk8s helm3 upgrade --install kubernetes-app-nginx ./helm/kubernetes-app-nginx \
+helm upgrade --install kubernetes-app-nginx ./helm/kubernetes-app-nginx \
   --namespace dev \
   --create-namespace \
   --set image.tag=v2 \
@@ -44,6 +44,6 @@ microk8s helm3 upgrade --install kubernetes-app-nginx ./helm/kubernetes-app-ngin
 3. Then verify:
 
 ```bash
-microk8s kubectl rollout status deployment/kubernetes-app-nginx -n dev
-microk8s helm3 list -n dev
+kubectl rollout status deployment/kubernetes-app-nginx -n dev
+helm list -n dev
 ```
