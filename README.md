@@ -1,4 +1,5 @@
 # MicroK8s / Kubernetes: Managing Application Files with Helm
+![nginx](images/nginx-logo.png)
 
 This guide explains three ways to make application files such as `index.html` available to containers running in MicroK8s:
 
@@ -163,7 +164,7 @@ spec:
 ### Deploy with Helm
 
 ```bash
-microk8s helm3 upgrade --install kubernetes-app-nginx ./helm/kubernetes-app-nginx \
+helm upgrade --install kubernetes-app-nginx ./helm/kubernetes-app-nginx \
   -n dev --create-namespace
 ```
 
