@@ -97,7 +97,7 @@ jobs:
           helm upgrade --install kubernetes-app-nginx ./helm-chart/kubernetes-app-nginx \
             --namespace dev \
             --create-namespace \
-            -- values ./helm-chart/kubernetes-app-nginx/values-dev.yaml \
+            --values ./helm-chart/kubernetes-app-nginx/values-dev.yaml \
             --wait --timeout 2m
 
       - name: Verify rollout
@@ -159,7 +159,7 @@ jobs:
           helm upgrade --install kubernetes-app-nginx ./helm-chart/kubernetes-app-nginx \
             --namespace staging \
             --create-namespace \
-            -- values ./helm-chart/kubernetes-app-nginx/values-staging.yaml \
+            --values ./helm-chart/kubernetes-app-nginx/values-staging.yaml \
             --wait --timeout 2m
 
       - name: Verify rollout
