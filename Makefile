@@ -2,13 +2,13 @@
 # Makefile
 # usage make <target>
 
-.PHONY: lint-workflows Lint-helm help
+.PHONY: lint-workflows lint-helm help
 .DEFAULT_GOAL := help
 
 help:
 	@echo "Available targets:"
 	@echo "  lint-workflows - Check YAML and workflow syntax"
-	@echo "  Lint-helm - Lint Helm charts"
+	@echo "  lint-helm - Lint Helm charts"
 
 lint-workflows:
 	@echo "Checking YAML syntax..."
