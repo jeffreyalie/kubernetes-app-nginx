@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: 10.206.213.243:32000/kubernetes-app-nginx
   tag: v1
-  pullPolicy: Aliways
+  pullPolicy: InIfNotPresent
 
 service:
   type: ClusterIP # This is the default service type. You can change it to NodePort or LoadBalancer if you want to expose the service externally.
