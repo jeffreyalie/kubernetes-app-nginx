@@ -31,22 +31,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Read image values
+      - name: Read image tag
         run: |
-          echo "IMAGE_TAG=$(yq '.image.tag' helm/kubernetes-app-nginx/values.yaml)" >> "$GITHUB_ENV"
+          IMAGE_TAG=$(grep -E '^\s+tag:' ./helm-chart/kubernetes-app-nginx/values.yaml | head -n1 | awk '{print $2}' | tr -d '"'"'")
+          echo "IMAGE_TAG=$IMAGE_TAG" >> "$GITHUB_ENV"
+          echo "Using tag $IMAGE_TAG"
 
       - name: Build Docker image
-        run: |
-          docker build \
-            -t ${{ env.IMAGE_REPO }}:${{ env.IMAGE_TAG }} \
-            ./app
+        run: docker build -t "${{ env.IMAGE_REPO }}:$IMAGE_TAG" ./app
 
       - name: Push to local registry
-        run: |
-          docker push ${{ env.IMAGE_REPO }}:${{ env.IMAGE_TAG }}
+        run: docker push "${{ env.IMAGE_REPO }}:$IMAGE_TAG"
 
       - name: Summary
-        run: echo "Built and pushed ${{ env.IMAGE_REPO }}:${{ env.IMAGE_TAG }}"
+        run: echo "Built and pushed ${{ env.IMAGE_REPO }}:$IMAGE_TAG"
 
   # ----------------------------------------------------------------
   # Job 2: Deploy to dev  (requires 'dev' environment approval)
