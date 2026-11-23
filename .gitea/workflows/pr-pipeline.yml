@@ -55,16 +55,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
-      - name: Install helm and kubectl
-        run: |
-          which curl || apt-get install -y curl
-          curl -fsSL --retry 5 --retry-delay 5 --retry-all-errors --max-time 120  https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-          helm version
+      - uses: azure/setup-helm@v4
+        with:
+          version: 'v3.16.4'
 
-          curl -LO "https://dl.k8s.io/release/$(curl -Ls https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-          chmod +x kubectl
-          mv kubectl /usr/local/bin/kubectl
-          kubectl version --client
+      - uses: azure/setup-kubectl@v4
 
       - name: Fetch MicroK8s kubeconfig from OpenBao
         env:
@@ -114,6 +109,8 @@ jobs:
       - name: Cleanup kubeconfig
         if: always()
         run: rm -f /tmp/kubeconfig
+        echo "PR pipeline completed successfully"
+        echo "moving to staging deployment"
 
   # ----------------------------------------------------------------
   # Job 3: Deploy to staging  (requires 'staging' environment approval)
@@ -126,16 +123,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install helm and kubectl
-        run: |
-          which curl || apt-get install -y curl
-          curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-          helm version
+      - uses: azure/setup-helm@v4
+        with:
+          version: 'v3.16.4'
 
-          curl -LO "https://dl.k8s.io/release/$(curl -Ls https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-          chmod +x kubectl
-          mv kubectl /usr/local/bin/kubectl
-          kubectl version --client
+      - uses: azure/setup-kubectl@v4
 
       - name: Fetch MicroK8s kubeconfig from OpenBao
         env:
@@ -179,3 +171,6 @@ jobs:
       - name: Cleanup kubeconfig
         if: always()
         run: rm -f /tmp/kubeconfig
+        echo "PR pipeline completed successfully"
+        echo "Add kubernetes-app-nginx.local to your /etc/hosts file to access the app in staging or dev"
+        echo "Add dns entry for kubernetes-app-nginx.local"
