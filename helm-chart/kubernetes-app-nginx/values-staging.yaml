@@ -5,5 +5,4 @@ ingress:
   enabled: true
   className: "public"
   host: "staging-nginx.local"
-
-existingSecretName: "openbao-creds"
+  

@@ -1,9 +1,19 @@
 # helm-chart/values-dev.yaml
 # Overrides for the dev environment
+# replicaCount: 1
+
+# image:
+#   repository: 10.206.213.243:32000/kubernetes-app-nginx
+#   tag: v1
+#   pullPolicy: IfNotPresent
+
+# service:
+#   type: ClusterIP # This is the default service type. You can change it to NodePort or LoadBalancer if you want to expose the service externally.
+#   port: 80 # Thisis the port that the service will expose. You can change it to any port you want.
+#   targetPort: 80 # This MUST match your nginx container port in deployment.yaml
 
 ingress:
   enabled: true
   className: "public"
   host: "dev-nginx.local"
 
-existingSecretName: "openbao-creds"
