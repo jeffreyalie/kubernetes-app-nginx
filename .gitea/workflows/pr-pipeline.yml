@@ -103,6 +103,7 @@ jobs:
       - name: Verify rollout
         run: |
           export KUBECONFIG=/tmp/kubeconfig
+          kubectl rollout restart deployment/kubernetes-app-nginx -n dev
           kubectl rollout status deployment/kubernetes-app-nginx -n dev --timeout=90s
 
       - name: Cleanup kubeconfig
@@ -165,6 +166,7 @@ jobs:
       - name: Verify rollout
         run: |
           export KUBECONFIG=/tmp/kubeconfig
+          kubectl rollout restart deployment/kubernetes-app-nginx -n staging
           kubectl rollout status deployment/kubernetes-app-nginx -n staging --timeout=90s
 
       - name: Cleanup kubeconfig
