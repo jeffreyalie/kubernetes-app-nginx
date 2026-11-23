@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: 10.206.213.243:32000/kubernetes-app-nginx
-  tag: v2
+  tag: v3
   pullPolicy: Always
 
 service:

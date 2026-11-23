@@ -4,7 +4,7 @@
 
 image:
   repository: 10.206.213.243:32000/kubernetes-app-nginx
-  tag: v1
+  tag: v3
   pullPolicy: Always
 
 service:
