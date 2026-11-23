@@ -97,7 +97,6 @@ jobs:
           helm upgrade --install go-lxd-vm-dashboard ./helm-chart \
             --namespace dev \
             --create-namespace \
-            --values helm-chart/values-dev.yaml \
             --set image.tag=${{ env.IMAGE_TAG }} \
             --wait --timeout 2m
 
@@ -160,7 +159,6 @@ jobs:
           helm upgrade --install go-lxd-vm-dashboard ./helm-chart \
             --namespace staging \
             --create-namespace \
-            --values helm-chart/values-staging.yaml \
             --set image.tag=${{ env.IMAGE_TAG }} \
             --wait --timeout 2m
 
