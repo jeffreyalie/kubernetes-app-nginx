@@ -1,5 +1,14 @@
 
-.PHONY: lint-workflows Lint-helm
+# Makefile
+# usage make <target>
+
+.PHONY: lint-workflows Lint-helm help
+.DEFAULT_GOAL := help
+
+help:
+	@echo "Available targets:"
+	@echo "  lint-workflows - Check YAML and workflow syntax"
+	@echo "  Lint-helm - Lint Helm charts"
 
 lint-workflows:
 	@echo "Checking YAML syntax..."
@@ -10,7 +19,7 @@ lint-workflows:
 
 	@echo "Workflow linting completed!"
 
-Lint-helm:
+lint-helm:
 	@echo "Linting Helm charts..."
 	helm lint helm/kubernetes-app-nginx
 
