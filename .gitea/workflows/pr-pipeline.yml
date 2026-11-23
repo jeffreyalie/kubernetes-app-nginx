@@ -94,7 +94,7 @@ jobs:
         run: |
           export KUBECONFIG=/tmp/kubeconfig
 
-          helm upgrade --install go-lxd-vm-dashboard ./helm-chart/kubernetes-app-nginx \
+          helm upgrade --install kubernetes-app-nginx ./helm-chart/kubernetes-app-nginx \
             --namespace dev \
             --create-namespace \
             --set image.tag=${{ env.IMAGE_TAG }} \
@@ -156,7 +156,7 @@ jobs:
         run: |
           export KUBECONFIG=/tmp/kubeconfig
 
-          helm upgrade --install go-lxd-vm-dashboard ./helm-chart/kubernetes-app-nginx \
+          helm upgrade --install kubernetes-app-nginx ./helm-chart/kubernetes-app-nginx \
             --namespace staging \
             --create-namespace \
             --set image.tag=${{ env.IMAGE_TAG }} \
