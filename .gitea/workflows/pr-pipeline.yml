@@ -18,7 +18,7 @@ on:
 
 env:
   # MicroK8s server IP (update in Gitea org secrets when changing)
-  IMAGE_REPO: 10.206.213.243:32000/go-lxd-vm-dashboard
+  IMAGE_REPO: 10.206.213.243:32000/kubernetes-app-nginx
   IMAGE_TAG: V${{ github.run_number }}
 
 jobs:
@@ -108,9 +108,10 @@ jobs:
 
       - name: Cleanup kubeconfig
         if: always()
-        run: rm -f /tmp/kubeconfig
-        echo "PR pipeline completed successfully"
-        echo "moving to staging deployment"
+        run: |
+          rm -f /tmp/kubeconfig
+          echo "PR pipeline completed successfully"
+          echo "moving to staging deployment"
 
   # ----------------------------------------------------------------
   # Job 3: Deploy to staging  (requires 'staging' environment approval)
@@ -170,7 +171,8 @@ jobs:
 
       - name: Cleanup kubeconfig
         if: always()
-        run: rm -f /tmp/kubeconfig
-        echo "PR pipeline completed successfully"
-        echo "Add kubernetes-app-nginx.local to your /etc/hosts file to access the app in staging or dev"
-        echo "Add dns entry for kubernetes-app-nginx.local"
+        run: |
+          rm -f /tmp/kubeconfig
+          echo "PR pipeline completed successfully"
+          echo "Add kubernetes-app-nginx.local to your /etc/hosts file to access the app in staging or dev"
+          echo "Add dns entry for kubernetes-app-nginx.local"
