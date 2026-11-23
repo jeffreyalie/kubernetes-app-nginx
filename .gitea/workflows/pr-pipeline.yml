@@ -9,11 +9,17 @@ name: PR Pipeline (dev → staging)
 # ------------------------------------------------------------------
 on:
   workflow_dispatch:
+    inputs:
+    version:
+      description: 'Docker image version (e.g. 1.0)'
+      required: true
+      type: string
+      default: '1.0'
 
 env:
   # MicroK8s server IP (update in Gitea org secrets when changing)
   IMAGE_REPO: 10.206.213.243:32000/go-lxd-vm-dashboard
-  IMAGE_TAG: pr-${{ github.run_number }}
+  IMAGE_TAG: V${{ github.run_number }}
 
 jobs:
   # ----------------------------------------------------------------
