@@ -9,17 +9,17 @@ name: PR Pipeline (dev → staging)
 # ------------------------------------------------------------------
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: 'Docker image version (e.g. 1.0)'
-        required: true
-        type: string
-        #default: '1.0'
+    # inputs:
+    #   version:
+    #     description: 'Docker image version (e.g. 1.0)'
+    #     required: true
+    #     type: string
+    #     #default: '1.0'
 
 env:
   # MicroK8s server IP (update in Gitea org secrets when changing)
   IMAGE_REPO: 10.206.213.243:32000/kubernetes-app-nginx
-  IMAGE_TAG: ${{ inputs.version }}
+  #IMAGE_TAG: ${{ inputs.version }}
 
 jobs:
   # ----------------------------------------------------------------
@@ -30,6 +30,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Read image values
+        run: |
+          echo "IMAGE_TAG=$(yq '.image.tag' helm/kubernetes-app-nginx/values.yaml)" >> "$GITHUB_ENV"
 
       - name: Build Docker image
         run: |
