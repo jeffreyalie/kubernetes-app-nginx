@@ -14,7 +14,7 @@ on:
         description: 'Docker image version (e.g. 1.0)'
         required: true
         type: string
-        default: '1.0'
+        #default: '1.0'
 
 env:
   # MicroK8s server IP (update in Gitea org secrets when changing)
