@@ -19,7 +19,7 @@ on:
 env:
   # MicroK8s server IP (update in Gitea org secrets when changing)
   IMAGE_REPO: 10.206.213.243:32000/kubernetes-app-nginx
-  #IMAGE_TAG: ${{ inputs.version }}
+  IMAGE_TAG: pr-${{ github.run_number }}
 
 jobs:
   # ----------------------------------------------------------------
@@ -104,6 +104,8 @@ jobs:
             --namespace dev \
             --create-namespace \
             --values ./helm-chart/kubernetes-app-nginx/values-dev.yaml \
+            -- set image.repository=${{ env.IMAGE_REPO }} \
+            -- set image.tag=${{ env.IMAGE_TAG }} \
             --wait --timeout 2m
 
       - name: Verify rollout
@@ -167,6 +169,8 @@ jobs:
             --namespace staging \
             --create-namespace \
             --values ./helm-chart/kubernetes-app-nginx/values-staging.yaml \
+            --set image.repository=${{ env.IMAGE_REPO }} \
+            --set image.tag=${{ env.IMAGE_TAG }} \
             --wait --timeout 2m
 
       - name: Verify rollout

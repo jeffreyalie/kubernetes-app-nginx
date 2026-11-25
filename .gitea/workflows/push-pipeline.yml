@@ -13,7 +13,7 @@ on:
 env:
   # MicroK8s server IP (update in Gitea org secrets when changing)
   IMAGE_REPO: 10.206.213.243:32000/kubernetes-app-nginx
-  IMAGE_TAG: pr-${{ github.run_number }}
+  IMAGE_TAG: pr-live-${{ github.run_number }}
 
 jobs:
   # ----------------------------------------------------------------
@@ -97,6 +97,7 @@ jobs:
             --namespace live \
             --create-namespace \
             --values helm-chart/values-live.yaml \
+            --set image.repository=${{ env.IMAGE_REPO }} \
             --set image.tag=${{ env.IMAGE_TAG }} \
             --wait --timeout 2m
 

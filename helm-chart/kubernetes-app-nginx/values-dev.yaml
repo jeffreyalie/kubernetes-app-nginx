@@ -4,7 +4,7 @@ replicaCount: 1
 
 image:
   repository: localhost:32000/kubernetes-app-nginx
-  tag: v4
+  tag: ""
   pullPolicy: Always
 
 service:
