@@ -3,12 +3,12 @@
 ## Docker
 1. Docker build
 ```bash
-docker build -t 10.206.213.243:32000/kubernetes-app-nginx:v1  ./app
+docker build -t harbor.local:32000/kubernetes-app-nginx:v1  ./app
 ```
 
 2. Docker run
 ```bash
-docker run -d --name kubernetes-app-nginx --restart unless-stopped -p 8080:80  10.206.213.243:32000/kubernetes-app-nginx:v1
+docker run -d --name kubernetes-app-nginx --restart unless-stopped -p 8080:80  harbor.local:32000/kubernetes-app-nginx:v1
 ```
 
 3. stop and remove old 
@@ -19,7 +19,7 @@ docker rm kubernetes-app-nginx
 
 4. run new version
 ```bash
-docker run -d --name kubernetes-app-nginx --restart unless-stopped -p 8080:80  10.206.213.243:32000/kubernetes-app-nginx:v2
+docker run -d --name kubernetes-app-nginx --restart unless-stopped -p 8080:80  harbor.local:32000/kubernetes-app-nginx:v2
 ```
 
 ## Helm
