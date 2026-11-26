@@ -1,4 +1,4 @@
-name: PR Pipeline (dev → staging)
+name: (dev → staging)
 
 # ------------------------------------------------------------------
 # Switch to pull_request: trigger once you've validated this works:
