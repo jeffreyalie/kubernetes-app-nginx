@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: harbor.local:32000/kubernetes-app-nginx
+  repository: harbor.local/kubernetes-app-nginx
   tag: ""
   pullPolicy: Always
 
