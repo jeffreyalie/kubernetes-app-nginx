@@ -137,7 +137,7 @@ jobs:
           helm upgrade --install go-lxd-vm-dashboard ./helm-chart \
             --namespace live \
             --create-namespace \
-            --values .helm-chart/kubernetes-app-nginx/values-live.yaml \
+            --values ./helm-chart/kubernetes-app-nginx/values-live.yaml \
             --set image.repository=${{ env.IMAGE_REPO }} \
             --set image.tag=${{ env.IMAGE_TAG }} \
             --wait --timeout 2m
