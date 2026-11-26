@@ -12,7 +12,7 @@ on:
 
 env:
   # MicroK8s server IP (update in Gitea org secrets when changing)
-  IMAGE_REPO: harbor.local/kubernetes-app-nginx
+  IMAGE_REPO: harbor.local/microk8s/kubernetes-app-nginx
   IMAGE_TAG: pr-live-${{ github.run_number }}
 
 jobs:

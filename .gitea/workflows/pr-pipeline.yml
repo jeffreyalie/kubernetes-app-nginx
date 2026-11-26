@@ -18,7 +18,7 @@ on:
 
 env:
   # MicroK8s server IP (update in Gitea org secrets when changing)
-  IMAGE_REPO: harbor.local/kubernetes-app-nginx
+  IMAGE_REPO: harbor.local/microk8s/kubernetes-app-nginx
   IMAGE_TAG: pr-${{ github.run_number }}
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Fetch MicroK8s kubeconfig from OpenBao
+      - name: Connect to Harbor via OpenBao credentials
         env:
           VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
           VAULT_ROLE_ID: ${{ secrets.VAULT_ROLE_ID }}

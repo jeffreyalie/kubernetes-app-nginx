@@ -83,10 +83,10 @@ This example uses the MicroK8s registry at `harbor.local`:
 
 ```bash
 docker build \
-  -t harbor.local/kubernetes-app-nginx:v1 \
+  -t harbor.local/microk8s/kubernetes-app-nginx:v1 \
   ./app
 
-docker push harbor.local/kubernetes-app-nginx:v1
+docker push harbor.local/microk8s/kubernetes-app-nginx:v1
 ```
 
 The registry must be enabled and reachable, and the Docker client must be configured to push to it if it uses an insecure HTTP endpoint.
@@ -108,7 +108,7 @@ appVersion: "1.0"
 replicaCount: 1
 
 image:
-  repository: harbor.local/kubernetes-app-nginx
+  repository: harbor.local/microk8s/kubernetes-app-nginx
   tag: v1
   pullPolicy: IfNotPresent
 
@@ -181,10 +181,10 @@ After editing `app/index.html`, build and push a new image tag:
 
 ```bash
 docker build \
-  -t harbor.local/kubernetes-app-nginx:v2 \
+  -t harbor.local/microk8s/kubernetes-app-nginx:v2 \
   ./app
 
-docker push harbor.local/kubernetes-app-nginx:v2
+docker push harbor.local/microk8s/kubernetes-app-nginx:v2
 ```
 
 Update the Helm release:

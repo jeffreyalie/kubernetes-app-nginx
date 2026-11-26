@@ -3,7 +3,7 @@
 # replicaCount: 1
 
 image:
-  repository: harbor.local/kubernetes-app-nginx
+  repository: harbor.local/microk8s/kubernetes-app-nginx
   tag: ""
   pullPolicy: Always
 
