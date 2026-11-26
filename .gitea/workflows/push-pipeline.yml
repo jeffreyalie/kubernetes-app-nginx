@@ -134,7 +134,7 @@ jobs:
         run: |
           export KUBECONFIG=/tmp/kubeconfig
 
-          helm upgrade --install go-lxd-vm-dashboard ./helm-chart \
+          helm upgrade --install kubernetes-app-nginx ./helm-chart \
             --namespace live \
             --create-namespace \
             --values ./helm-chart/kubernetes-app-nginx/values-live.yaml \
