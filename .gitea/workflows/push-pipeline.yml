@@ -134,7 +134,7 @@ jobs:
         run: |
           export KUBECONFIG=/tmp/kubeconfig
 
-          helm upgrade --install kubernetes-app-nginx ./helm-chart \
+          helm upgrade --install kubernetes-app-nginx ./helm-chart/kubernetes-app-nginx \
             --namespace live \
             --create-namespace \
             --values ./helm-chart/kubernetes-app-nginx/values-live.yaml \
