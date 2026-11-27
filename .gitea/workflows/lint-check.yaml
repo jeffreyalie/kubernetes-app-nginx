@@ -21,7 +21,7 @@ jobs:
           sudo mv ./actionlint /usr/local/bin/
 
       - name: Run yamllint
-        run: yamllint -s -c ./gitea
+        run: yamllint -s ./.gitea
 
       - name: Run actionlint
-        run: actionlint ./gitea/workflows
+        run: actionlint ./.gitea/workflows
