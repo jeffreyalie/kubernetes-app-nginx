@@ -19,9 +19,16 @@ env:
   ACCESS_URL: live.nginx.local
 jobs:
   # ----------------------------------------------------------------
+  # Job 0: Linting
+  # ----------------------------------------------------------------
+  linting:
+      uses: ./.gitea/workflows/lint.yaml
+
+  # ----------------------------------------------------------------
   # Job 1: Build & push the Docker image (no approval needed)
   # ----------------------------------------------------------------
   build:
+    needs: linting
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
