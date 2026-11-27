@@ -88,15 +88,15 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     #environment: live          # ← Gitea environment gate (add reviewers in repo settings)
-    
+
     env:
       NAMESPACE: live
       VALUES_FILE: ./helm-chart/kubernetes-app-nginx/values-live.yaml
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-     
+
       - name: Install helm
         uses: azure/setup-helm@v4
         with:
@@ -162,9 +162,9 @@ jobs:
           rm -f /tmp/kubeconfig
           echo "PR pipeline completed successfully"
           echo "Add live-nginx.local to your /etc/hosts file to access the app in live"
-      
+
       - name: Summary
-        run: | 
+        run: |
           echo "${{env.IMAGE_REPO}}"
           echo "{{env.IMAGE_TAG}}
           echo "{{env.RELEASE_NAME}}"

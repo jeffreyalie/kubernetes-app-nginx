@@ -25,4 +25,8 @@ lint-helm:
 	@echo "Linting Helm charts..."
 	helm lint $(HELM_CHART_PATH)
 
+	@echo "Linting yaml"
+	yamllint -d relaxed $(HELM_CHART_PATH)
+
+
 	@echo "Helm linting completed!"
