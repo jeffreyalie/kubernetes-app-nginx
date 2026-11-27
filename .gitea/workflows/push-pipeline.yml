@@ -23,7 +23,7 @@ jobs:
   # Job 0: Linting
   # ----------------------------------------------------------------
   linting:
-    uses: admin/reusable-workflow-client-repo/terraform-destroy.yml@main
+    uses: admin/.gitea/workflows/lint.yaml@main
 
   # ----------------------------------------------------------------
   # Job 1: Build & push the Docker image (no approval needed)
