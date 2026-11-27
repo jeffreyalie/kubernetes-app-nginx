@@ -24,7 +24,7 @@ jobs:
           sudo mv ./actionlint /usr/local/bin/
 
       - name: Run yamllint
-        run: yamllint -s -c .yamllint.yaml .
+        run: yamllint -c .yamllint.yaml .
 
       - name: Run actionlint
         run: actionlint
