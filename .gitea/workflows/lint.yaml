@@ -23,4 +23,4 @@ jobs:
           pre-commit run --all-files --show-diff-on-failure
 
       - name: Helm lint
-        run: helm lint ./CHART_DIR      # <- change to your chart folder
+        run: helm lint ./helm-chart/kubernetes-app-nginx      # <- change to your chart folder
