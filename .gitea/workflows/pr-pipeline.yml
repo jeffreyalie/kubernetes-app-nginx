@@ -244,7 +244,7 @@ jobs:
           echo "PR pipeline completed successfully"
           echo "Add ${{env.ACCESS_URL}} to your /etc/hosts file to access the app in staging or dev"
 
-        - name: Summary
+      - name: Summary
         run: | 
           echo "${{env.IMAGE_REPO}}"
           echo "{{env.IMAGE_TAG}}
