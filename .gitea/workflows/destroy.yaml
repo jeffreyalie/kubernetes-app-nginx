@@ -13,8 +13,8 @@ on:
           - staging
           - live
 
-  env:
-    RELEASE_NAME: kubernetes-app-nginx
+env:
+  RELEASE_NAME: kubernetes-app-nginx
 
 jobs:
   uninstall:
