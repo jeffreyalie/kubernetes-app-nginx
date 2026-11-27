@@ -152,7 +152,7 @@ jobs:
             --set image.tag=${{ env.IMAGE_TAG }} \
             --wait --timeout 2m
 
-            echo "${{env.RELEASE_NAME}} deployed to ${{env.NAMESPACE}} successfully"
+            echo "${{ env.RELEASE_NAME }} deployed to ${{env.NAMESPACE}} successfully"
 
       - name: Verify rollout
         run: |
@@ -160,7 +160,7 @@ jobs:
           kubectl rollout restart deployment/${{ env.RELEASE_NAME }} -n ${{ env.NAMESPACE }}
           kubectl rollout status deployment/${{ env.RELEASE_NAME }} -n ${{ env.NAMESPACE }} --timeout=90s
           
-          echo "${[env.RELEASE_NAME]} restarted successfully"
+          echo "${{ env.RELEASE_NAME }} restarted successfully"
 
       - name: Cleanup kubeconfig
         if: always()
@@ -227,14 +227,14 @@ jobs:
             --set image.tag=${{ env.IMAGE_TAG }} \
             --wait --timeout 2m
 
-            echo "${{env.RELEASE_NAME}} deplyed successfully to ${{env.NAMESPACE}}"
+            echo "${{ env.RELEASE_NAME }} deplyed successfully to ${{env.NAMESPACE}}"
 
       - name: Verify rollout
         run: |
           export KUBECONFIG=/tmp/kubeconfig
           kubectl rollout restart deployment/${{ env.RELEASE_NAME }} -n ${{ env.NAMESPACE }}
           kubectl rollout status deployment/${{ env.RELEASE_NAME }} -n ${{ env.NAMESPACE }} --timeout=90s
-          echo "${[env.RELEASE_NAME]} restarted successfully"
+          echo "${{env.RELEASE_NAME}} restarted successfully"
 
       - name: Cleanup kubeconfig
         if: always()
