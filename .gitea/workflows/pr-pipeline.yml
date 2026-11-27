@@ -92,23 +92,23 @@ jobs:
   # Job 2: Deploy to dev  (requires 'dev' environment approval)
   # ----------------------------------------------------------------
   deploy-dev-pr:
+
     needs: build-pr
+    runs-on: ubuntu-latest
 
     env:
     NAMESPACE: dev
     VALUES_FILE: ./helm-chart/kubernetes-app-nginx/values-dev.yaml
 
-    runs-on: ubuntu-latest
-    environment: dev           # ← Gitea environment gate (add reviewers in repo settings)
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
+      
       - name: Install helm
         uses: azure/setup-helm@v4
         with:
           version: 'v3.16.4'
-
+      
       - name: Install kubectl
         uses: azure/setup-kubectl@v4
 
@@ -176,11 +176,11 @@ jobs:
   deploy-staging-pr:
     needs: deploy-dev-pr
     runs-on: ubuntu-latest
-
+    
     env:
     NAMESPACE: staging
     VALUES_FILE: ./helm-chart/kubernetes-app-nginx/values-staging.yaml
-
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -244,8 +244,8 @@ jobs:
           echo "PR pipeline completed successfully"
           echo "Add ${{env.ACCESS_URL}} to your /etc/hosts file to access the app in staging or dev"
 
-      - name: Summary
-        run: |
+        - name: Summary
+        run: | 
           echo "${{env.IMAGE_REPO}}"
           echo "{{env.IMAGE_TAG}}
           echo "{{env.RELEASE_NAME}}"
