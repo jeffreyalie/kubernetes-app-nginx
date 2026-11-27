@@ -19,8 +19,6 @@ on:
 jobs:
   uninstall:
     runs-on: ubuntu-latest
-    # Optional: Require approval for destruction
-    environment: ${{ github.event.inputs.namespace }}
 
     steps:
       - name: Checkout
