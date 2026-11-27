@@ -17,12 +17,13 @@ env:
   RELEASE_NAME: kubernetes-app-nginx
   HELM_CHART_PATH: ./helm-chart/kubernetes-app-nginx
   ACCESS_URL: live.nginx.local
+
 jobs:
   # ----------------------------------------------------------------
   # Job 0: Linting
   # ----------------------------------------------------------------
   linting:
-      uses: ./.gitea/workflows/lint.yaml
+      uses: .gitea/workflows/lint.yaml
 
   # ----------------------------------------------------------------
   # Job 1: Build & push the Docker image (no approval needed)
