@@ -16,7 +16,6 @@ env:
   IMAGE_TAG: pr-live-${{ github.run_number }}
   RELEASE_NAME: kubernetes-app-nginx
   HELM_CHART_PATH: ./helm-chart/kubernetes-app-nginx
-  VALUES_FILE: ./helm-chart/kubernetes-app-nginx/values-dev.yaml
 
 jobs:
   # ----------------------------------------------------------------
@@ -92,6 +91,7 @@ jobs:
     
     env:
       NAMESPACE: live
+      VALUES_FILE: ./helm-chart/kubernetes-app-nginx/values-live.yaml
     
     steps:
       - name: Checkout
@@ -146,12 +146,19 @@ jobs:
             --set image.tag=${{ env.IMAGE_TAG }} \
             --wait --timeout 2m
 
+            @echo "${{env.RELEASE_NAME}} deployed to ${{env.NAMESPACE}} successfully"
+
       - name: Verify rollout
         run: |
           export KUBECONFIG=/tmp/kubeconfig
           kubectl rollout restart deployment/${{ env.RELEASE_NAME }} -n ${{ env.NAMESPACE }}
           kubectl rollout status deployment/${{ env.RELEASE_NAME }} -n ${{ env.NAMESPACE }} --timeout=90s
 
+          @echo "${{env.RELEASE_NAME}} restarted successfully"
+
       - name: Cleanup kubeconfig
         if: always()
-        run: rm -f /tmp/kubeconfig
+        run: |
+          rm -f /tmp/kubeconfig
+          echo "PR pipeline completed successfully"
+          echo "Add live-nginx.local to your /etc/hosts file to access the app in live"
