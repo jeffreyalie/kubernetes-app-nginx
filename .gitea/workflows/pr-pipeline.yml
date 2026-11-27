@@ -23,7 +23,6 @@ env:
   RELEASE_NAME: kubernetes-app-nginx
   HELM_CHART_PATH: ./helm-chart/kubernetes-app-nginx
   VALUES_FILE: ./helm-chart/kubernetes-app-nginx/values-dev.yaml
-  HARBOR_REGISTRY: harbor.local
 
 jobs:
   # ----------------------------------------------------------------
