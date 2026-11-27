@@ -26,9 +26,16 @@ env:
 
 jobs:
   # ----------------------------------------------------------------
+  # Job 0: Linting
+  # ----------------------------------------------------------------
+  linting:
+      uses: ./.gitea/workflows/lint.yaml
+
+  # ----------------------------------------------------------------
   # Job 1: Build & push the Docker image (no approval needed)
   # ----------------------------------------------------------------
   build-pr:
+    needs: linting
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
