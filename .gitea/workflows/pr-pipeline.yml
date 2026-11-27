@@ -96,8 +96,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-    NAMESPACE: "dev"
-    VALUES_FILE: "./helm-chart/kubernetes-app-nginx/values-dev.yaml"
+      NAMESPACE: dev
+      VALUES_FILE: ./helm-chart/kubernetes-app-nginx/values-dev.yaml
 
     steps:
       - name: Checkout
@@ -177,8 +177,8 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-    NAMESPACE: "staging"
-    VALUES_FILE: "./helm-chart/kubernetes-app-nginx/values-staging.yaml"
+      NAMESPACE: staging
+      VALUES_FILE: ./helm-chart/kubernetes-app-nginx/values-staging.yaml
     
     steps:
       - name: Checkout
