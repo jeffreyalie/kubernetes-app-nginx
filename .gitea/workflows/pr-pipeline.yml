@@ -246,7 +246,7 @@ jobs:
       - name: Summary
         run: | 
           echo "${{ env.IMAGE_REPO }}"
-          echo "${{ env.IMAGE_TAG }}
+          echo "${{ env.IMAGE_TAG }}"
           echo "${{ env.RELEASE_NAME }}"
           echo "${{ env.ACCESS_URL }}"
 
