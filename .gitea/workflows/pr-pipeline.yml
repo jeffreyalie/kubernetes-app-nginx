@@ -20,6 +20,10 @@ env:
   # MicroK8s server IP (update in Gitea org secrets when changing)
   IMAGE_REPO: harbor.local/microk8s/kubernetes-app-nginx
   IMAGE_TAG: pr-${{ github.run_number }}
+  RELEASE_NAME: kubernetes-app-nginx
+  HELM_CHART_PATH: ./helm-chart/kubernetes-app-nginx
+  VALUES_FILE: ./helm-chart/kubernetes-app-nginx/values-dev.yaml
+  HARBOR_REGISTRY: harbor.local
 
 jobs:
   # ----------------------------------------------------------------
@@ -90,6 +94,10 @@ jobs:
   # ----------------------------------------------------------------
   deploy-dev-pr:
     needs: build-pr
+    
+    env:
+    NAMESPACE: dev
+    
     runs-on: ubuntu-latest
     environment: dev           # ← Gitea environment gate (add reviewers in repo settings)
     steps:
@@ -104,7 +112,7 @@ jobs:
       - name: Install kubectl
         uses: azure/setup-kubectl@v4
 
-      - name: Fetch MicroK8s kubeconfig from OpenBao
+      - name: Fetch MicroK8s kubeconfig from OpenBao for helm deployment
         env:
           VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
           VAULT_ROLE_ID: ${{ secrets.VAULT_ROLE_ID }}
@@ -137,10 +145,10 @@ jobs:
         run: |
           export KUBECONFIG=/tmp/kubeconfig
 
-          helm upgrade --install kubernetes-app-nginx ./helm-chart/kubernetes-app-nginx \
-            --namespace dev \
+          helm upgrade --install ${{ env.RELEASE_NAME }} ${{ env.HELM_CHART_PATH }} \
+            --namespace ${{ env.NAMESPACE }} \
             --create-namespace \
-            --values ./helm-chart/kubernetes-app-nginx/values-dev.yaml \
+            --values ${{ env.VALUES_FILE }} \
             --set image.repository=${{ env.IMAGE_REPO }} \
             --set image.tag=${{ env.IMAGE_TAG }} \
             --wait --timeout 2m
@@ -148,8 +156,8 @@ jobs:
       - name: Verify rollout
         run: |
           export KUBECONFIG=/tmp/kubeconfig
-          kubectl rollout restart deployment/kubernetes-app-nginx -n dev
-          kubectl rollout status deployment/kubernetes-app-nginx -n dev --timeout=90s
+          kubectl rollout restart deployment/${{ env.RELEASE_NAME }} -n ${{ env.NAMESPACE }}
+          kubectl rollout status deployment/${{ env.RELEASE_NAME }} -n ${{ env.NAMESPACE }} --timeout=90s
 
       - name: Cleanup kubeconfig
         if: always()
@@ -164,7 +172,10 @@ jobs:
   deploy-staging-pr:
     needs: deploy-dev-pr
     runs-on: ubuntu-latest
-    environment: staging       # ← Gitea environment gate
+    
+    env:
+    NAMESPACE: staging
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -177,7 +188,7 @@ jobs:
       - name: Install kubectl
         uses: azure/setup-kubectl@v4
 
-      - name: Fetch MicroK8s kubeconfig from OpenBao
+      - name: Fetch MicroK8s kubeconfig from OpenBao for helm deployment
         env:
           VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
           VAULT_ROLE_ID: ${{ secrets.VAULT_ROLE_ID }}
@@ -204,10 +215,10 @@ jobs:
         run: |
           export KUBECONFIG=/tmp/kubeconfig
 
-          helm upgrade --install kubernetes-app-nginx ./helm-chart/kubernetes-app-nginx \
-            --namespace staging \
+          helm upgrade --install ${{ env.RELEASE_NAME }} ${{ env.HELM_CHART_PATH }} \
+            --namespace ${{ env.NAMESPACE }} \
             --create-namespace \
-            --values ./helm-chart/kubernetes-app-nginx/values-staging.yaml \
+            --values ${{ env.VALUES_FILE }} \
             --set image.repository=${{ env.IMAGE_REPO }} \
             --set image.tag=${{ env.IMAGE_TAG }} \
             --wait --timeout 2m
@@ -215,8 +226,8 @@ jobs:
       - name: Verify rollout
         run: |
           export KUBECONFIG=/tmp/kubeconfig
-          kubectl rollout restart deployment/kubernetes-app-nginx -n staging
-          kubectl rollout status deployment/kubernetes-app-nginx -n staging --timeout=90s
+          kubectl rollout restart deployment/${{ env.RELEASE_NAME }} -n ${{ env.NAMESPACE }}
+          kubectl rollout status deployment/${{ env.RELEASE_NAME }} -n ${{ env.NAMESPACE }} --timeout=90s
 
       - name: Cleanup kubeconfig
         if: always()
