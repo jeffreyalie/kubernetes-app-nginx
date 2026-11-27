@@ -92,7 +92,6 @@ jobs:
   # Job 2: Deploy to dev  (requires 'dev' environment approval)
   # ----------------------------------------------------------------
   deploy-dev-pr:
-
     needs: build-pr
     runs-on: ubuntu-latest
 
@@ -158,8 +157,8 @@ jobs:
       - name: Verify rollout
         run: |
           export KUBECONFIG=/tmp/kubeconfig
-          kubectl rollout restart deployment/${{ env.RELEASE_NAME }} -n ${{ env.NAMESPACE }}
-          kubectl rollout status deployment/${{ env.RELEASE_NAME }} -n ${{ env.NAMESPACE }} --timeout=90s
+          kubectl rollout restart deployment/"$RELEASE_NAME" -n "$NAMESPACE"
+          kubectl rollout status deployment/"$RELEASE_NAME" -n "$NAMESPACE" --timeout=90s
 
           @echo "${{env.RELEASE_NAME}} restarted successfully"
 
