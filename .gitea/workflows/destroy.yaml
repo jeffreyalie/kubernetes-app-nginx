@@ -12,10 +12,6 @@ on:
           - dev
           - staging
           - live
-      # delete_namespace:
-      #   description: '⚠️ IMPORTANT: Also delete the namespace (removes openbao-creds too)'
-      #   type: boolean
-      #   default:
 
     env:
       RELEASE_NAME: kubernetes-app-nginx
@@ -70,12 +66,3 @@ jobs:
           # if it was created manually or via a different hook.
           kubectl delete configmap go-lxd-vm-dashboard-grafana-dashboard \
             --namespace ${{ github.event.inputs.namespace }} --ignore-not-found
-      # - name: Delete namespace (if requested)
-      #   if: ${{ github.event.inputs.delete_namespace == 'true' }}
-      #   run: |
-      #     export KUBECONFIG=/tmp/kubeconfig
-      #     kubectl delete namespace ${{ github.event.inputs.namespace }} --ignore-not-found
-
-      # - name: Cleanup kubeconfig
-      #   if: always()
-      #   run: rm -f /tmp/kubeconfig
