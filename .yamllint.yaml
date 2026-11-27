@@ -9,6 +9,4 @@ rules:
   line-length: disable
   document-start: disable
   truthy:
-    check-keys: false      # stops "on:" in workflows being flagged
-  comments:
-    min-spaces-from-content: 1
+    check-keys: false
