@@ -13,10 +13,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install linters
+      - name: Install yamllint
         run: |
           sudo apt-get update
-          sudo apt-get install -y yamllint actionlint
+          sudo apt-get install -y yamllint
+
+      - name: Install actionlint
+        run: |
+          bash <(curl -fsSL https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash) 1.7.7
+          sudo mv ./actionlint /usr/local/bin/
 
       - name: Run yamllint
         run: yamllint -s -c .yamllint.yaml .
