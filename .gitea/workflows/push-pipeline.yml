@@ -168,4 +168,3 @@ jobs:
           echo "{{ env.IMAGE_TAG }}"
           echo "{{ env.RELEASE_NAME }}"
           echo "{{ env.ACCESS_URL }}"
-
