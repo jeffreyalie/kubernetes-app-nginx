@@ -23,7 +23,7 @@ jobs:
   # Job 0: Linting
   # ----------------------------------------------------------------
   linting:
-    uses: admin/.gitea/workflows/lint.yaml@main
+    uses: admin/reusable-linting/.gitea/workflows/lint.yaml@main
 
   # ----------------------------------------------------------------
   # Job 1: Build & push the Docker image (no approval needed)
