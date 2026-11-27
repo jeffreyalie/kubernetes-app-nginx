@@ -27,7 +27,7 @@ jobs:
         run: yamllint -c .yamllint.yaml .
 
       - name: Run actionlint
-        run: actionlint
+        run: actionlint ./.gitea/workflows/*.yml
 
       - name: Helm lint
         run: helm lint ./helm-chart/kubernetes-app-nginx      # <- change to your chart folder
